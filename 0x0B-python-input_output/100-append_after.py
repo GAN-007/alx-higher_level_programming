@@ -1,25 +1,16 @@
 #!/usr/bin/python3
+"""append after module"""
 
 
 def append_after(filename="", search_string="", new_string=""):
-    """Inserts a line of text to a file, after search string found
-    Args:
-        filename (str): path to filename
-        search_string (str): search string
-        new_string (str): string to insert
-    """
-    new_lines = []
-    with open(filename, 'r+', encoding='utf-8') as f:
-        lines = f.readlines()
-        for line in lines:
-            new_lines.append(line)
-            if search_string in line:
-                new_lines.append(new_string)
+    """append a text after a substring line"""
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        for line in new_lines:
-            f.write(line)
-
-
-if __name__ == '__main__':
-    append_after("append_after_100.txt", "Python", "\"C is fun!\"\n")
+    with open(filename, 'r') as f:
+        content = f.readlines()
+        for (index, line) in enumerate(content):
+            if line.find(search_string) != -1:
+                content.insert(index+1, new_string)
+        new_content = "".join(content)
+    f = open(filename, 'w')
+    f.write(new_content)
+    f.close()
